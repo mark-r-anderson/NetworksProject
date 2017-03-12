@@ -6,10 +6,6 @@
 	objectVersion = 46;
 	objects = {
 
-/* Begin PBXBuildFile section */
-		19889AF51E75B4DA00A05206 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 19889AF41E75B4DA00A05206 /* main.cpp */; };
-/* End PBXBuildFile section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		19889AEF1E75B4DA00A05206 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -24,7 +20,10 @@
 
 /* Begin PBXFileReference section */
 		19889AF11E75B4DA00A05206 /* NetworksProject */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = NetworksProject; sourceTree = BUILT_PRODUCTS_DIR; };
-		19889AF41E75B4DA00A05206 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		19889B001E75BCD700A05206 /* task1 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = task1; sourceTree = "<group>"; };
+		19889B011E75BCD700A05206 /* task2 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = task2; sourceTree = "<group>"; };
+		19889B021E75BCD700A05206 /* task3 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = task3; sourceTree = "<group>"; };
+		19889B031E75BCD700A05206 /* task4 */ = {isa = PBXFileReference; lastKnownFileType = folder; path = task4; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,41 +56,12 @@
 		19889AF31E75B4DA00A05206 /* NetworksProject */ = {
 			isa = PBXGroup;
 			children = (
-				19889AFF1E75BC0C00A05206 /* task4 */,
-				19889AFE1E75BC0100A05206 /* task3 */,
-				19889AFC1E75BBE600A05206 /* task2 */,
-				19889AFB1E75BBDE00A05206 /* task1 */,
+				19889B001E75BCD700A05206 /* task1 */,
+				19889B011E75BCD700A05206 /* task2 */,
+				19889B021E75BCD700A05206 /* task3 */,
+				19889B031E75BCD700A05206 /* task4 */,
 			);
 			path = NetworksProject;
-			sourceTree = "<group>";
-		};
-		19889AFB1E75BBDE00A05206 /* task1 */ = {
-			isa = PBXGroup;
-			children = (
-				19889AF41E75B4DA00A05206 /* main.cpp */,
-			);
-			name = task1;
-			sourceTree = "<group>";
-		};
-		19889AFC1E75BBE600A05206 /* task2 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = task2;
-			sourceTree = "<group>";
-		};
-		19889AFE1E75BC0100A05206 /* task3 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = task3;
-			sourceTree = "<group>";
-		};
-		19889AFF1E75BC0C00A05206 /* task4 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = task4;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,7 +121,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				19889AF51E75B4DA00A05206 /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
