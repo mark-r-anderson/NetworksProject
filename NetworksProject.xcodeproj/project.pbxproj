@@ -57,9 +57,41 @@
 		19889AF31E75B4DA00A05206 /* NetworksProject */ = {
 			isa = PBXGroup;
 			children = (
-				19889AF41E75B4DA00A05206 /* main.cpp */,
+				19889AFF1E75BC0C00A05206 /* task4 */,
+				19889AFE1E75BC0100A05206 /* task3 */,
+				19889AFC1E75BBE600A05206 /* task2 */,
+				19889AFB1E75BBDE00A05206 /* task1 */,
 			);
 			path = NetworksProject;
+			sourceTree = "<group>";
+		};
+		19889AFB1E75BBDE00A05206 /* task1 */ = {
+			isa = PBXGroup;
+			children = (
+				19889AF41E75B4DA00A05206 /* main.cpp */,
+			);
+			name = task1;
+			sourceTree = "<group>";
+		};
+		19889AFC1E75BBE600A05206 /* task2 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = task2;
+			sourceTree = "<group>";
+		};
+		19889AFE1E75BC0100A05206 /* task3 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = task3;
+			sourceTree = "<group>";
+		};
+		19889AFF1E75BC0C00A05206 /* task4 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = task4;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
