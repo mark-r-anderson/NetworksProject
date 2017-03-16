@@ -8,18 +8,18 @@ class crcencoding
 public:
 	crcencoding();
 
-	void SetMessage(uint8_t message) { fMessage = message; }
-	void SetGenerator(uint8_t generator) { fGenerator = generator; }
-	void SetCodeword(uint8_t codeword) { fCodeword = codeword;  }
+	void SetMessage(uint32_t message) { fMessage = message; }
+	void SetGenerator(uint32_t generator) { fGenerator = generator; }
+	void SetCodeword(uint32_t codeword) { fCodeword = codeword;  }
 
-	uint8_t generatorCRC();
+	uint32_t generatorCRC();
 	void verifierCRC();
-	uint8_t alterCRC(uint8_t const bitnumber);
+	uint32_t alterCRC(uint32_t const bitnumber);
 
 private:
-	uint8_t GetRemainderCRC(uint8_t const message, uint8_t const generator);
+	uint32_t GetRemainderCRC(uint32_t const message, uint32_t const generator);
 
-	uint8_t fMessage;
-	uint8_t fGenerator;
-	uint8_t fCodeword;
+	uint32_t fMessage;
+	uint32_t fGenerator;
+	uint32_t fCodeword;
 };

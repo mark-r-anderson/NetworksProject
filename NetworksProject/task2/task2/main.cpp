@@ -12,7 +12,7 @@ int main(int argc, const char * argv[]) {
 
 	//std::cout << std::bitset<8>(codeword) << std::endl;
 
-	crc.SetCodeword(codeword);
+	//crc.SetCodeword(codeword);
 	crc.verifierCRC();
 
 	crc.alterCRC(1);
