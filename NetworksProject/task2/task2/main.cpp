@@ -8,11 +8,10 @@ int main(int argc, const char * argv[]) {
 
 	crc.SetMessage(message);
 	crc.SetGenerator(polynomial);
-	uint8_t codeword = crc.generatorCRC();
+	uint32_t codeword = crc.generatorCRC();
 
 	//std::cout << std::bitset<8>(codeword) << std::endl;
 
-	//crc.SetCodeword(codeword);
 	crc.verifierCRC();
 
 	crc.alterCRC(1);

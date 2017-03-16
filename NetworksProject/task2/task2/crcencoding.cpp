@@ -21,7 +21,7 @@ uint32_t crcencoding::generatorCRC()
 	//binary subtract the calculated remainder from the codeword
 	codeword ^= remainder;
 
-	//std::cout << "Codeword: " << std::bitset<8>(codeword) << std::endl << std::endl;
+	std::cout << "Codeword:  " << std::bitset<8>(codeword) << std::endl;
 
 	fCodeword = codeword;
 
@@ -58,7 +58,7 @@ uint32_t crcencoding::alterCRC(uint32_t const bitnumber)
 	fCodeword ^= biterror;
 
 	std::cout << "Bit error: " << std::bitset<8>(biterror) << std::endl;
-	std::cout << "Codeword: " << std::bitset<8>(fCodeword) << std::endl << std::endl;
+	std::cout << "Codeword:  " << std::bitset<8>(fCodeword) << std::endl << std::endl;
 
 	return fCodeword;
 }
