@@ -2,65 +2,85 @@
 
 crcencoding::crcencoding()
 {
-	fMessage = 0;
 	fGenerator = 0;
-	fCodeword = 0;
+	fMessages = {};
+	fCodewords = {};
 }
 
 uint32_t crcencoding::generatorCRC()
 {
 	//generator polynomial degree
 	uint32_t gendeg = (int)log2(fGenerator);
+	//codeword to be output
+	uint32_t codeword;
+	//obtain the remainder of the generator divided into the codeword
+	uint32_t remainder;
 
-	//codeword to be output; initially just the message shifted by the generator polynomial degree
-	uint32_t codeword = (fMessage << gendeg);
+	for (size_t i = 0; i < fMessages.size(); i++)
+	{
+		//initially just the message shifted by the generator polynomial degree
+		codeword = (fMessages[i] << gendeg);
+		//obtain the remainder of the generator divided into the codeword
+		remainder = GetRemainderCRC(codeword, fGenerator);
+		//binary subtract the calculated remainder from the codeword
+		codeword ^= remainder;
+		//append the codeword to the list of codewords
+		fCodewords.push_back(codeword);
 
-	//obtain the remainder of the gnerator divided into the codeword
-	uint32_t remainder = GetRemainderCRC(codeword, fGenerator);
+		//std::cout << "Codeword:  " << std::bitset<16>(codeword) << std::endl;
+	}
 
-	//binary subtract the calculated remainder from the codeword
-	codeword ^= remainder;
-
-	std::cout << "Codeword:  " << std::bitset<8>(codeword) << std::endl;
-
-	fCodeword = codeword;
-
-	//return the codeword
+	//return the last codeword in the list
 	return codeword;
 }
 
 void crcencoding::verifierCRC()
 {
-	//generator polynomial degree
-	uint32_t gendeg = (int)log2(fGenerator);
-
-	//obtain the remainder from the codeword and generator polynomial
-	uint32_t verification = GetRemainderCRC(fCodeword, fGenerator);
-
-	//check whether or not the remainder is zero
-	if (verification)
-	{//if the remainder is nonzero, an error has occured in the bit stream
-		std::cout << "The bit stream contains an error. Please retransmit." << std::endl << std::endl;
-	}
-	else
-	{//if the remainder is zero, the message was transmitted with no detectable errors
-		std::cout << "The bit stream was transmitted with no detectable errors." << std::endl << std::endl;
+	for (size_t i = 0; i < fMessages.size(); i++)
+	{
+		//generator polynomial degree
+		uint32_t gendeg = (int)log2(fGenerator);
+		//obtain the remainder from the codeword and generator polynomial
+		uint32_t verification = GetRemainderCRC(fCodewords[i], fGenerator);
+		//check whether or not the remainder is zero
+		if (verification)
+		{//if the remainder is nonzero, an error has occured in the bit stream
+			if (fMessages.size() != 1)
+			{
+				std::cout << "The bit stream contains an error. Please retransmit." << std::endl << std::endl;
+			}
+			else
+			{
+				std::cout << "The bit stream contains an error in the " << i << " byte. Please retransmit." << std::endl << std::endl;
+			}
+			
+		}
+		else
+		{//if the remainder is zero, the message was transmitted with no detectable errors
+			std::cout << "The bit stream was transmitted with no detectable errors." << std::endl << std::endl;
+		}
 	}
 }
 
-uint32_t crcencoding::alterCRC(uint32_t const bitnumber)
+uint32_t crcencoding::alterCRC(uint32_t const bitnumber, uint32_t index)
 {
-	//placement of the bit error
-	uint32_t codewordbits = (int)log2(fCodeword) + 1;
-	uint32_t biterror = 1 << (codewordbits - bitnumber);
+	if (index < fCodewords.size()) {
+		//placement of the bit error
+		uint32_t codewordbits = (int)log2(fCodewords[index]) + 1;
+		uint32_t biterror = 1 << (codewordbits - bitnumber);
 
-	//XOR the message with the bit error to flip the desired bit and create an incorrect bit stream
-	fCodeword ^= biterror;
+		//XOR the message with the bit error to flip the desired bit and create an incorrect bit stream
+		fCodewords[index] ^= biterror;
 
-	std::cout << "Bit error: " << std::bitset<8>(biterror) << std::endl;
-	std::cout << "Codeword:  " << std::bitset<8>(fCodeword) << std::endl << std::endl;
+		std::cout << "Bit error: " << std::bitset<32>(biterror) << std::endl;
+		std::cout << "Codeword:  " << std::bitset<32>(fCodewords[index]) << std::endl << std::endl;
 
-	return fCodeword;
+		return fCodewords[index];
+	}
+	else {
+		std::cout << "Invalid index. Please use an index within range." << std::endl;
+		return 0;
+	}
 }
 
 uint32_t crcencoding::GetRemainderCRC(uint32_t const dividend, uint32_t const generator)
@@ -87,7 +107,7 @@ uint32_t crcencoding::GetRemainderCRC(uint32_t const dividend, uint32_t const ge
 		}
 	}
 
-	std::cout << "Remainder: " << std::bitset<8>(rcq) << std::endl << std::endl;
+	//std::cout << "Remainder: " << std::bitset<8>(rcq) << std::endl << std::endl;
 
 	return rcq;
 }
