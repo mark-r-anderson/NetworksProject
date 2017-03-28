@@ -9,11 +9,12 @@ class crcencoding
 public:
 	crcencoding();
 
-	//void SetMessage(uint32_t message) { fMessage = message; fMessages = {}; }
-	//void SetCodeword(uint32_t codeword) { fCodeword = codeword; }
-
-	void SetMessage(uint32_t message) { fMessages.push_back(message); }
+	void SetMessage(uint32_t message) { 
+		fMessages = {};
+		fMessages.push_back(message);
+	}
 	void SetMessage(std::string message) {
+		fMessages = {};
 		for (char & c : message)
 		{
 			//std::cout << "One character: " << c << std::bitset<8>(c) << std::endl;
@@ -31,13 +32,10 @@ public:
 	uint32_t alterCRC(uint32_t const bitnumber, uint32_t const index = 0);
 
 private:
-	uint32_t GetRemainderCRC(uint32_t const message, uint32_t const generator);
+	uint32_t computeRemainderCRC(uint32_t const message, uint32_t const generator); /// Compute the remainder
 
-	uint32_t fGenerator;
+	uint32_t fGenerator; /// Generator polynomial
 
-	std::vector<uint32_t> fMessages;
-	std::vector<uint32_t> fCodewords;
-
-	//uint32_t fMessage; //for a message specified as an interger or binary number
-	//uint32_t fCodeword; //for a message specified as an interger or binary number
+	std::vector<uint32_t> fMessages; ///Vector to store the message(s) in, depending on the format entered
+	std::vector<uint32_t> fCodewords; ///Vector to store the computed codeword(s) in, depending on the format entered
 };

@@ -21,7 +21,7 @@ uint32_t crcencoding::generatorCRC()
 		//initially just the message shifted by the generator polynomial degree
 		codeword = (fMessages[i] << gendeg);
 		//obtain the remainder of the generator divided into the codeword
-		remainder = GetRemainderCRC(codeword, fGenerator);
+		remainder = computeRemainderCRC(codeword, fGenerator);
 		//binary subtract the calculated remainder from the codeword
 		codeword ^= remainder;
 		//append the codeword to the list of codewords
@@ -36,29 +36,36 @@ uint32_t crcencoding::generatorCRC()
 
 void crcencoding::verifierCRC()
 {
+	std::cout << "Running verifier..." << std::endl;
+	bool condErr = false;
+	int iErr = -2;
+
 	for (size_t i = 0; i < fMessages.size(); i++)
 	{
 		//generator polynomial degree
 		uint32_t gendeg = (int)log2(fGenerator);
 		//obtain the remainder from the codeword and generator polynomial
-		uint32_t verification = GetRemainderCRC(fCodewords[i], fGenerator);
+		uint32_t verification = computeRemainderCRC(fCodewords[i], fGenerator);
 		//check whether or not the remainder is zero
-		if (verification)
-		{//if the remainder is nonzero, an error has occured in the bit stream
-			if (fMessages.size() != 1)
-			{
-				std::cout << "The bit stream contains an error. Please retransmit." << std::endl << std::endl;
-			}
-			else
-			{
-				std::cout << "The bit stream contains an error in the " << i << " byte. Please retransmit." << std::endl << std::endl;
-			}
-			
+		if (verification) { condErr = true; iErr = i; }
+		
+	}
+
+	if (condErr)
+	{//if the remainder is nonzero, an error has occured in the bit stream
+		if (fMessages.size() == 1)
+		{
+			std::cout << "The bit stream contains an error. Please retransmit." << std::endl << std::endl;
 		}
 		else
-		{//if the remainder is zero, the message was transmitted with no detectable errors
-			std::cout << "The bit stream was transmitted with no detectable errors." << std::endl << std::endl;
+		{
+			std::cout << "The bit stream contains an error at bytre" << iErr+1 << ". Please retransmit." << std::endl << std::endl;
 		}
+
+	}
+	else
+	{//if the remainder is zero, the message was transmitted with no detectable errors
+		std::cout << "The bit stream was transmitted with no detectable errors." << std::endl << std::endl;
 	}
 }
 
@@ -83,7 +90,7 @@ uint32_t crcencoding::alterCRC(uint32_t const bitnumber, uint32_t index)
 	}
 }
 
-uint32_t crcencoding::GetRemainderCRC(uint32_t const dividend, uint32_t const generator)
+uint32_t crcencoding::computeRemainderCRC(uint32_t const dividend, uint32_t const generator)
 {
 	uint32_t rcq; //Shift register and output contents
 
