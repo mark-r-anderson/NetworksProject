@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <math.h>
 #include <bitset>
+#include <iomanip>   
 
 class crcencoding
 {
@@ -27,7 +28,7 @@ public:
 		if (index < fCodewords.size()) { fCodewords[index] = codeword; }
 	}
 
-	uint32_t generatorCRC();
+	void generatorCRC();
 	void verifierCRC();
 	uint32_t alterCRC(uint32_t const bitnumber, uint32_t const index = 0);
 
