@@ -28,7 +28,7 @@ void crcencoding::generatorCRC()
 		//append the codeword to the list of codewords
 		fCodewords.push_back(codeword);
 
-		std::cout << "Codeword:            " << std::bitset<32>(codeword) << std::endl;
+		std::cout << "Codeword:\t\t" << std::bitset<32>(codeword) << std::endl;
 	}
 	std::cout << std::endl;
 }
@@ -81,8 +81,8 @@ uint32_t crcencoding::alterCRC(uint32_t const bitnumber, uint32_t index)
 		//XOR the message with the bit error to flip the desired bit and create an incorrect bit stream
 		fCodewords[index] ^= biterror;
 
-		std::cout << "Bit error:           " << std::bitset<32>(biterror) << std::endl;
-		std::cout << "Corrupted Codeword:  " << std::bitset<32>(fCodewords[index]) << std::endl << std::endl;
+		std::cout << "Bit error:\t\t" << std::bitset<32>(biterror) << std::endl;
+		std::cout << "Corrupted Codeword:\t" << std::bitset<32>(fCodewords[index]) << std::endl << std::endl;
 
 		return fCodewords[index];
 	}

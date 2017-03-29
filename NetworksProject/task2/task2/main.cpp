@@ -7,7 +7,7 @@ int main(int argc, const char * argv[]) {
 	uint32_t r; //cast the character of an ASCII string to an integer r
 	std::bitset<32> binarymessage; //used to cast input as a binary to the message
 
-	uint32_t message = 0b00001001; //default message
+	uint32_t message = 0b01001001; //default message
 	uint32_t polynomial = 0b00000111; //default polynomial
 	uint32_t biterror = 1; //default bit error
 
@@ -41,7 +41,7 @@ int main(int argc, const char * argv[]) {
 			std::cin >> messagestr;
 			for (char & c : messagestr) {
 				r = c;
-				std::cout << "Message:    " << std::bitset<32>(r) << std::endl;
+				std::cout << "Message:\t\t" << std::bitset<32>(r) << std::endl;
 			}
 			crc.SetMessage(messagestr);
 		}
@@ -64,7 +64,7 @@ int main(int argc, const char * argv[]) {
 				if (cond) { std::cout << "Please use a valid entry, as selected above: "; }
 				std::cin.clear(); std::cin.ignore(INT_MAX, '\n');
 			} while (cond);
-			std::cout << "Message:    " << std::bitset<32>(message) << std::endl;
+			std::cout << "Message:\t\t" << std::bitset<32>(message) << std::endl;
 			crc.SetMessage(message); //set the message
 
 			/*
@@ -84,7 +84,7 @@ int main(int argc, const char * argv[]) {
 				if (cond) { std::cout << "Please use a valid entry, as selected above: "; }
 				std::cin.clear(); std::cin.ignore(INT_MAX, '\n');
 			} while (cond);
-			std::cout << "Polynomial: " << std::bitset<32>(polynomial) << std::endl;
+			std::cout << "Polynomial:\t\t" << std::bitset<32>(polynomial) << std::endl;
 			crc.SetGenerator(polynomial); //set the generator polynomial
 		}
 
@@ -103,6 +103,7 @@ int main(int argc, const char * argv[]) {
 			std::cin.ignore(INT_MAX, '\n');
 		} while (cond);
 	}
+	std::cout << std::endl;
 	
 	/*
 	Run the generator and then the verifier
@@ -110,6 +111,8 @@ int main(int argc, const char * argv[]) {
 
 	crc.generatorCRC(); //generate the codeword; stored in the object
 	crc.verifierCRC(); //verify the codeword that is stored in the object
+
+	std::string codeword = crc.GetCodeword(); //retrieve the codeword in ASCII, if desired
 
 	/*
 	Run the alter program and then the verifier
