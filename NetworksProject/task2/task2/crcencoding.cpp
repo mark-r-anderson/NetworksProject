@@ -36,7 +36,7 @@ void crcencoding::generatorCRC()
 void crcencoding::verifierCRC()
 {
 	std::cout << "Running verifier..." << std::endl;
-	bool condErr = false;
+	bool condErr = false; //initialize the condition that there is an error to be false
 	int iErr = -2;
 
 	for (size_t i = 0; i < fMessages.size(); i++)
@@ -48,8 +48,8 @@ void crcencoding::verifierCRC()
 		uint32_t verification = computeRemainderCRC(fCodewords[i], fGenerator);
 
 		//check whether or not the remainder is zero
+		//if the remainder is nonzero, there is an error and the condition is set to true
 		if (verification) { condErr = true; iErr = i; }
-		
 	}
 
 	if (condErr)
@@ -60,7 +60,7 @@ void crcencoding::verifierCRC()
 		}
 		else
 		{
-			std::cout << "The bit stream contains an error at bytre" << iErr+1 << ". Please retransmit." << std::endl << std::endl;
+			std::cout << "The bit stream contains an error at byte " << iErr+1 << ". Please retransmit." << std::endl << std::endl;
 		}
 
 	}
@@ -74,16 +74,24 @@ uint32_t crcencoding::alterCRC(uint32_t const bitnumber, uint32_t index)
 {
 	std::cout << "Running the alter program..." << std::endl;
 	if (index < fCodewords.size()) {
+
 		//placement of the bit error
 		uint32_t codewordbits = (int)log2(fCodewords[index]) + 1;
-		uint32_t biterror = 1 << (codewordbits - bitnumber);
 
-		//XOR the message with the bit error to flip the desired bit and create an incorrect bit stream
-		fCodewords[index] ^= biterror;
+		if (bitnumber > 0 && bitnumber <= codewordbits)
+		{
+			uint32_t biterror = 1 << (codewordbits - bitnumber);
 
-		std::cout << "Bit error:\t\t" << std::bitset<32>(biterror) << std::endl;
-		std::cout << "Corrupted Codeword:\t" << std::bitset<32>(fCodewords[index]) << std::endl << std::endl;
+			//XOR the message with the bit error to flip the desired bit and create an incorrect bit stream
+			fCodewords[index] ^= biterror;
 
+			std::cout << "Bit error:\t\t" << std::bitset<32>(biterror) << std::endl;
+			std::cout << "Corrupted Codeword:\t" << std::bitset<32>(fCodewords[index]) << std::endl << std::endl;
+		}
+		else
+		{
+			std::cout << "That number is not in the range of the codeword. No alteration has been made." << std::endl;
+		}
 		return fCodewords[index];
 	}
 	else {

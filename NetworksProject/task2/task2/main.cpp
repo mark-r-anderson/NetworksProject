@@ -3,7 +3,7 @@
 int main(int argc, const char * argv[]) {
 	crcencoding crc; //initialize crc object
 	
-	bool cond; //ensure that the user entered the correct type
+	bool condCin; //ensure that the user entered the correct type for cin
 	uint32_t r; //cast the character of an ASCII string to an integer r
 	std::bitset<32> binarymessage; //used to cast input as a binary to the message
 
@@ -12,7 +12,7 @@ int main(int argc, const char * argv[]) {
 	uint32_t biterror = 1; //default bit error
 
 	std::string messagestr = "a";
-	std::string temp;
+	std::string temp; //used to read the user input
 	
 	crc.SetMessage(message); //set the message to the default in case the user does not specify
 	crc.SetGenerator(polynomial); //set the polynomial to the default is the user does not specify
@@ -60,10 +60,10 @@ int main(int argc, const char * argv[]) {
 				else if (temp == "o") { std::cin >> std::oct >> message; }
 				else { std::cin >> message; }
 
-				cond = std::cin.fail();
-				if (cond) { std::cout << "Please use a valid entry, as selected above: "; }
+				condCin = std::cin.fail();
+				if (condCin) { std::cout << "Please use a valid entry, as selected above: "; }
 				std::cin.clear(); std::cin.ignore(INT_MAX, '\n');
-			} while (cond);
+			} while (condCin);
 			std::cout << "Message:\t\t" << std::bitset<32>(message) << std::endl;
 			crc.SetMessage(message); //set the message
 
@@ -80,10 +80,10 @@ int main(int argc, const char * argv[]) {
 				else if (temp == "o") { std::cin >> std::oct >> polynomial; }
 				else { std::cin >> polynomial; }
 
-				cond = std::cin.fail();
-				if (cond) { std::cout << "Please use a valid entry, as selected above: "; }
+				condCin = std::cin.fail();
+				if (condCin) { std::cout << "Please use a valid entry, as selected above: "; }
 				std::cin.clear(); std::cin.ignore(INT_MAX, '\n');
-			} while (cond);
+			} while (condCin);
 			std::cout << "Polynomial:\t\t" << std::bitset<32>(polynomial) << std::endl;
 			crc.SetGenerator(polynomial); //set the generator polynomial
 		}
@@ -97,11 +97,11 @@ int main(int argc, const char * argv[]) {
 		do
 		{
 			std::cin >> biterror;
-			cond = std::cin.fail();
-			if (cond) { std::cout << "The bit error must be specified with an integer. Please use a valid entry: "; }
+			condCin = std::cin.fail();
+			if (condCin) { std::cout << "The bit error must be specified with an integer. Please use a valid entry: "; }
 			std::cin.clear();
 			std::cin.ignore(INT_MAX, '\n');
-		} while (cond);
+		} while (condCin);
 	}
 	std::cout << std::endl;
 	
